@@ -1,6 +1,11 @@
 package PDA;
 
 import java.util.Scanner;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -14,13 +19,8 @@ public class Main {
         PDAState q1 = new PDAState("q1");
         PDA pda = new PDA(q0, 'a', 'b', 'c', 'd', 'e', 'f');
         q1.setFinal();
-
         //V -> variavel para o vazio
-        /* Scanner input = new Scanner(System.in);
-        String word;
-        System.out.print("Digita ai: ");
-        word = input.next();
-        System.out.println(word);*/
+        
         q0.addTransition("V", "Z", "SZ", q1); //inicial
         q1.addTransition("", "Z", "", q1); //final
         q1.addTransition("a", "S", "H", q1);
@@ -42,10 +42,12 @@ public class Main {
         q1.addTransition("d", "J", "", q1);
         q1.addTransition("c", "J", "JE", q1);
 
-        if (pda.testWord("V" + "aaabbcdef").isValid()) {
-            System.out.println("Aceita");
+        String word = JOptionPane.showInputDialog("Digite uma palavra: ");
+        
+        if (pda.testWord("V" + word).isValid()) {
+            JOptionPane.showMessageDialog(null, "A palavra " + word + " foi aceita");
         } else {
-            System.out.println("Nao aceita");
+            JOptionPane.showMessageDialog(null, "A palavra " + word + " não foi aceita");
         }
     }
 
