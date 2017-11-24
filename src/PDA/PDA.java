@@ -3,6 +3,7 @@ package PDA;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
+import javax.swing.JOptionPane;
 
 public class PDA {
 
@@ -30,10 +31,17 @@ public class PDA {
         PDAState currentState = initialState;
 
         System.out.println("Testando a palavra => " + word.substring(1));
-
-        if (!checkWord(word)) {
-            System.out.println("Caracter inválido!");
+        
+        if (!word.startsWith("V")) {
+            JOptionPane.showMessageDialog(null, "A palavra " + word + " não foi aceita, pois q0 não pode processar outro caracter além do vazio!");
             valid = false;
+        }
+        for (int i = 1; i < word.length(); i++) {
+            String letter = String.valueOf(word.charAt(i));
+            if (!alphabet.contains(letter)) {
+                JOptionPane.showMessageDialog(null, "A palavra " + word.substring(1) + " não foi aceita, pois o caracter " + "'" + word.charAt(i) +"'"+ " não faz parte do alfabeto");
+                valid = false;
+            }
         }
 
         for (int i = 0; i < word.length() && valid; i++) {
@@ -44,7 +52,7 @@ public class PDA {
             PDATransition transition = currentState.getNext(letter, pop);
 
             if (transition == null) {
-                System.out.println("Sem mais transições");
+                JOptionPane.showMessageDialog(null, "A palavra " + word.substring(1) + " não foi aceita, pois o autômato não tem movimento previsto!");
                 valid = false;
             } else {
                 String push = transition.getPush();
@@ -60,27 +68,23 @@ public class PDA {
                 System.out.println("(" + currentState.getStateName() + ", " + stack + ", " + word.substring(i) + ")");
             }
         }
-
-        if (!currentState.isFinal() || stack.empty() || !stack.pop().equals(String.valueOf(START_CHARACTER))) {
-            //estado atual não é final ou acabou as variaveis ou ultima variavel não é Z
+        
+        if(!currentState.isFinal()){
+            JOptionPane.showMessageDialog(null, "A palavra " + word.substring(1) + " não foi aceita, pois não finalizou em um estado final!");
             valid = false;
         }
-
+        
+        if(stack.empty()){
+            JOptionPane.showMessageDialog(null, "A palavra " + word.substring(1) + " não foi aceita, pois a pilha está vazia!");
+            valid = false;
+        }
+        
+        if(!stack.pop().equals(String.valueOf(START_CHARACTER))){
+            JOptionPane.showMessageDialog(null, "A palavra " + word.substring(1) + " não foi aceita, pois a pilha não está vazia!");
+            valid = false;
+        }
+        
         return new Result(stack, word, valid);
-    }
-
-    private boolean checkWord(String word) {
-        if (!word.startsWith("V")) {
-            return false;
-        }
-        for (int i = 1; i < word.length(); i++) {
-            String letter = String.valueOf(word.charAt(i));
-            if (!alphabet.contains(letter)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
 }

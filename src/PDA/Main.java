@@ -46,9 +46,7 @@ public class Main {
         
         if (pda.testWord("V" + word).isValid()) {
             JOptionPane.showMessageDialog(null, "A palavra " + word + " foi aceita");
-        } else {
-            JOptionPane.showMessageDialog(null, "A palavra " + word + " não foi aceita");
-        }
+        } 
     }
 
 }
