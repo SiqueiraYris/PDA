@@ -52,7 +52,7 @@ public class PDA {
             PDATransition transition = currentState.getNext(letter, pop);
 
             if (transition == null) {
-                JOptionPane.showMessageDialog(null, "A palavra " + word.substring(1) + " não foi aceita, pois o autômato não tem movimento previsto!");
+                System.out.println("A palavra " + word.substring(1) + " não foi aceita, pois o autômato não tem movimento previsto!");
                 valid = false;
             } else {
                 String push = transition.getPush();

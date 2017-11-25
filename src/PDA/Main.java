@@ -7,10 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-/**
- *
- * @author SIQUEIRA
- */
 public class Main {
 
     public static void main(String[] args) {
